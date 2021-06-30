@@ -1,14 +1,39 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Reviews from './Reviews';
 
-class ReviewInput extends Component {
+export class ReviewInput extends Component {
+  state = {
+    text: ''
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.addReview(this.state.text)
+    this.setState({
+      text: ''
+    })
+  }
+
+  handleChange = event => {
+    this.setState({
+      text: event.target.value
+    })
+  }
+
   render() {
     return (
-      <div>
-        Review Input
-      </div>
+      <form onSubmit={this.handleSubmit}>
+        <input type="text" value={this.state.text} onChange={this.handleChange} />
+        <input type="submit" value="Submit" />
+      </form>
     );
   }
 };
 
-export default ReviewInput;
+const mapDispatchToProps = dispatch => ({
+  addReview: text => dispatch({ type: 'ADD_REVIEW', text })
+})
+
+export default connect(null, mapDispatchToProps)(ReviewInput);

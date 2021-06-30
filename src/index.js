@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import manageRestaurant from './reducers/manageRestaurant';
 
+import logger from 'redux-logger';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 
-const store = createStore(manageRestaurant);
+import App from './App';
+import rootReducer from './reducers/manageRestaurant';
 
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(logger)
+);
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-document.getElementById('root')
+  document.getElementById('root')
 );

@@ -1,12 +1,12 @@
 import { expect } from 'chai';
 import React from 'react';
 import { configure, shallow, mount } from 'enzyme';
-import RestaurantInput from '../src/components/restaurants/RestaurantInput'
+import { RestaurantInput } from '../src/components/restaurants/RestaurantInput'
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import manageRestaurant, { cuidFn } from '../src/reducers/manageRestaurant'
 import App from '../src/App'
-import Restaurant from '../src/components/restaurants/Restaurant'
+import { Restaurant } from '../src/components/restaurants/Restaurant'
 import Adapter from 'enzyme-adapter-react-16'
 
 configure({ adapter: new Adapter() })
@@ -116,16 +116,17 @@ describe('Restaurant Component with Redux', () => {
 
   it('has a button that dispatches a DELETE_RESTAURANT action with the proper id when clicked', ()=> {
     const store = createStore(manageRestaurant);
+
     store.dispatch({type: 'ADD_RESTAURANT', text: 'Bagel World'})
 
     const wrapper = mount(<Provider store={store}><App /></Provider>)
 
     let deleteButton = wrapper.find('button').first();
+    let form = wrapper.find('form');
 
-    deleteButton.simulate('click',  { preventDefault() {} });
+    form.simulate('submit',  { preventDefault() {} });
 
     expect(store.getState().restaurants.length).to.equal(0);
-
 
   });
 
@@ -146,7 +147,7 @@ describe('Restaurant Component with Redux', () => {
 
     wrapper.update()
 
-    let deleteButton = wrapper.find('button').first();
+    let deleteButton = wrapper.find('.delete').first;
 
     deleteButton.simulate('click');
 
@@ -156,7 +157,7 @@ describe('Restaurant Component with Redux', () => {
     input.simulate('change', { target: { value: 'Song', name: 'text', id: 'text' }});
     form.simulate('submit',  { preventDefault() {} });
 
-    deleteButton = wrapper.find('button').last();
+    deleteButton = wrapper.find('.delete').last;
 
     deleteButton.simulate('click');
 

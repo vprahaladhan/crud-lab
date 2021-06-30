@@ -6,7 +6,7 @@ import { createStore } from 'redux'
 import manageRestaurant, { cuidFn } from '../src/reducers/manageRestaurant';
 import App from '../src/App';
 import Restaurant from '../src/components/restaurants/Restaurant';
-import ReviewInput from '../src/components/reviews/ReviewInput';
+import { ReviewInput } from '../src/components/reviews/ReviewInput';
 import Reviews from '../src/components/reviews/Reviews';
 import ReviewsContainer from '../src/containers/ReviewsContainer';
 import Review from '../src/components/reviews/Review';
